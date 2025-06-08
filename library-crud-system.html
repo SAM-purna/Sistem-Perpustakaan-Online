@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Library Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-in forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .book-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-book-open text-2xl text-blue-600 mr-3"></i>
+                    <span class="text-xl font-bold text-gray-800">My Library</span>
+                </div>
+                <ul class="flex space-x-8 font-medium text-gray-700">
+                    <li><a href="#" onclick="showPage('home')" class="hover:text-blue-600 transition-colors">HOME</a></li>
+                    <li><a href="#" onclick="showPage('catalog')" class="hover:text-blue-600 transition-colors">KATALOG</a></li>
+                    <li><a href="#" onclick="showPage('management')" class="hover:text-blue-600 transition-colors">KELOLA BUKU</a></li>
+                    <li><a href="#" onclick="showPage('about')" class="hover:text-blue-600 transition-colors">TENTANG</a></li>
+                    <li><a href="#" onclick="showPage('contact')" class="hover:text-blue-600 transition-colors">KONTAK</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Home Page -->
+    <section id="home" class="page relative min-h-screen">
+        <div class="relative h-96 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-700"></div>
+            <div class="absolute inset-0 flex flex-col justify-center items-center text-white px-4">
+                <h1 class="text-5xl font-bold mb-4 fade-in">WELCOME TO MY LIBRARY</h1>
+                <p class="text-xl mb-8 fade-in">Kelola koleksi buku Anda dengan mudah</p>
+                <button onclick="showPage('management')" 
+                        class="bg-white text-blue-600 px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-colors fade-in">
+                    MULAI KELOLA BUKU
+                </button>
+            </div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 py-16">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <i class="fas fa-plus-circle text-4xl text-blue-600 mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Tambah Buku</h3>
+                    <p class="text-gray-600">Tambahkan buku baru ke koleksi perpustakaan</p>
+                </div>
+                <div class="text-center p-6">
+                    <i class="fas fa-search text-4xl text-green-600 mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Cari & Lihat</h3>
+                    <p class="text-gray-600">Cari dan lihat informasi detail buku</p>
+                </div>
+                <div class="text-center p-6">
+                    <i class="fas fa-edit text-4xl text-purple-600 mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Edit & Hapus</h3>
+                    <p class="text-gray-600">Update informasi atau hapus buku dari koleksi</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Page -->
+    <section id="catalog" class="page hidden min-h-screen py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Katalog Buku</h2>
+            
+            <!-- Search Bar -->
+            <div class="mb-8 flex justify-center">
+                <div class="relative w-full max-w-md">
+                    <input type="text" id="searchInput" placeholder="Cari buku..." 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- Books Grid -->
+            <div id="booksGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Books will be populated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Management Page -->
+    <section id="management" class="page hidden min-h-screen py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold">Kelola Buku</h2>
+                <button onclick="openAddModal()" 
+                        class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                    <i class="fas fa-plus mr-2"></i>Tambah Buku
+                </button>
+            </div>
+
+            <!-- Management Table -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Judul</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Penulis</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Genre</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tahun</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="managementTable" class="bg-white divide-y divide-gray-200">
+                            <!-- Table rows will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Page -->
+    <section id="about" class="page hidden min-h-screen py-16">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-8">Tentang My Library</h2>
+            <p class="text-lg text-gray-600 mb-8">
+                Sistem manajemen perpustakaan yang memungkinkan Anda untuk mengelola koleksi buku dengan mudah. 
+                Fitur CRUD lengkap untuk menambah, melihat, mengupdate, dan menghapus data buku.
+            </p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Fitur Utama</h3>
+                    <ul class="text-left space-y-2">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Tambah buku baru</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Lihat katalog buku</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Edit informasi buku</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Hapus buku</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Pencarian buku</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Teknologi</h3>
+                    <ul class="text-left space-y-2">
+                        <li><i class="fab fa-html5 text-orange-500 mr-2"></i>HTML5</li>
+                        <li><i class="fab fa-css3-alt text-blue-500 mr-2"></i>CSS3 & Tailwind</li>
+                        <li><i class="fab fa-js-square text-yellow-500 mr-2"></i>JavaScript</li>
+                        <li><i class="fas fa-database text-gray-600 mr-2"></i>Local Storage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Page -->
+    <section id="contact" class="page hidden min-h-screen py-16">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">Kontak</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Hubungi Kami</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-blue-600 mr-3"></i>
+                            <span>library@example.com</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-blue-600 mr-3"></i>
+                            <span>+62 123 456 789</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-blue-600 mr-3"></i>
+                            <span>Jl. Perpustakaan No. 123, Jakarta</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-4">Kirim Pesan</h3>
+                    <form class="space-y-4">
+                        <input type="text" placeholder="Nama" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <input type="email" placeholder="Email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <textarea placeholder="Pesan" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">Kirim</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add/Edit Modal -->
+    <div id="bookModal" class="modal">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 id="modalTitle" class="text-xl font-bold">Tambah Buku</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="bookForm" class="space-y-4">
+                <input type="hidden" id="bookId">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Judul</label>
+                    <input type="text" id="title" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Penulis</label>
+                    <input type="text" id="author" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Genre</label>
+                    <select id="genre" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                        <option value="">Pilih Genre</option>
+                        <option value="Fiksi">Fiksi</option>
+                        <option value="Non-Fiksi">Non-Fiksi</option>
+                        <option value="Ilmiah">Ilmiah</option>
+                        <option value="Sejarah">Sejarah</option>
+                        <option value="Biografi">Biografi</option>
+                        <option value="Romance">Romance</option>
+                        <option value="Thriller">Thriller</option>
+                        <option value="Fantasy">Fantasy</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tahun Terbit</label>
+                    <input type="number" id="year" required min="1900" max="2024" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+                    <textarea id="description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+                <div class="flex space-x-3 pt-4">
+                    <button type="submit" class="flex-1 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition-colors">
+                        Simpan
+                    </button>
+                    <button type="button" onclick="closeModal()" class="flex-1 bg-gray-300 text-gray-700 py-2 rounded-md hover:bg-gray-400 transition-colors">
+                        Batal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Library Management System JavaScript
+        class LibraryManager {
+            constructor() {
+                this.books = this.loadBooks();
+                this.currentEditId = null;
+                this.init();
+            }
+
+            init() {
+                this.renderBooks();
+                this.renderManagementTable();
+                this.setupEventListeners();
+                this.loadSampleData();
+            }
+
+            loadSampleData() {
+                if (this.books.length === 0) {
+                    const sampleBooks = [
+                        {
+                            id: 1,
+                            title: "Laskar Pelangi",
+                            author: "Andrea Hirata",
+                            genre: "Fiksi",
+                            year: 2005,
+                            description: "Novel tentang perjuangan anak-anak untuk mendapatkan pendidikan di Belitung."
+                        },
+                        {
+                            id: 2,
+                            title: "Bumi Manusia",
+                            author: "Pramoedya Ananta Toer",
+                            genre: "Sejarah",
+                            year: 1980,
+                            description: "Novel yang menceritakan kehidupan di masa kolonial Belanda."
+                        },
+                        {
+                            id: 3,
+                            title: "Pulang",
+                            author: "Tere Liye",
+                            genre: "Fiksi",
+                            year: 2015,
+                            description: "Novel tentang pencarian identitas dan makna pulang."
+                        }
+                    ];
+                    this.books = sampleBooks;
+                    this.saveBooks();
+                    this.renderBooks();
+                    this.renderManagementTable();
+                }
+            }
+
+            loadBooks() {
+                const saved = JSON.parse(window.localStorage?.getItem('libraryBooks') || '[]');
+                return saved;
+            }
+
+            saveBooks() {
+                if (window.localStorage) {
+                    window.localStorage.setItem('libraryBooks', JSON.stringify(this.books));
+                }
+            }
+
+            setupEventListeners() {
+                document.getElementById('bookForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.saveBook();
+                });
+
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    this.searchBooks(e.target.value);
+                });
+            }
+
+            generateId() {
+                return this.books.length > 0 ? Math.max(...this.books.map(b => b.id)) + 1 : 1;
+            }
+
+            addBook(bookData) {
+                const book = {
+                    ...bookData,
+                    id: this.generateId()
+                };
+                this.books.push(book);
+                this.saveBooks();
+                this.renderBooks();
+                this.renderManagementTable();
+            }
+
+            updateBook(id, bookData) {
+                const index = this.books.findIndex(b => b.id === id);
+                if (index !== -1) {
+                    this.books[index] = { ...this.books[index], ...bookData };
+                    this.saveBooks();
+                    this.renderBooks();
+                    this.renderManagementTable();
+                }
+            }
+
+            deleteBook(id) {
+                if (confirm('Apakah Anda yakin ingin menghapus buku ini?')) {
+                    this.books = this.books.filter(b => b.id !== id);
+                    this.saveBooks();
+                    this.renderBooks();
+                    this.renderManagementTable();
+                }
+            }
+
+            saveBook() {
+                const bookData = {
+                    title: document.getElementById('title').value,
+                    author: document.getElementById('author').value,
+                    genre: document.getElementById('genre').value,
+                    year: parseInt(document.getElementById('year').value),
+                    description: document.getElementById('description').value
+                };
+
+                if (this.currentEditId) {
+                    this.updateBook(this.currentEditId, bookData);
+                } else {
+                    this.addBook(bookData);
+                }
+
+                this.closeModal();
+            }
+
+            searchBooks(query) {
+                const filteredBooks = this.books.filter(book => 
+                    book.title.toLowerCase().includes(query.toLowerCase()) ||
+                    book.author.toLowerCase().includes(query.toLowerCase()) ||
+                    book.genre.toLowerCase().includes(query.toLowerCase())
+                );
+                this.renderBooks(filteredBooks);
+            }
+
+            renderBooks(booksToRender = this.books) {
+                const grid = document.getElementById('booksGrid');
+                if (!grid) return;
+
+                grid.innerHTML = booksToRender.map(book => `
+                    <div class="book-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                            <i class="fas fa-book text-white text-4xl"></i>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-lg mb-2 truncate">${book.title}</h3>
+                            <p class="text-gray-600 text-sm mb-1">Penulis: ${book.author}</p>
+                            <p class="text-gray-600 text-sm mb-1">Genre: ${book.genre}</p>
+                            <p class="text-gray-600 text-sm mb-3">Tahun: ${book.year}</p>
+                            <p class="text-gray-700 text-sm line-clamp-3">${book.description || 'Tidak ada deskripsi.'}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            renderManagementTable() {
+                const tbody = document.getElementById('managementTable');
+                if (!tbody) return;
+
+                tbody.innerHTML = this.books.map(book => `
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">${book.title}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">${book.author}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                ${book.genre}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            ${book.year}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <button onclick="library.editBook(${book.id})" class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button onclick="library.deleteBook(${book.id})" class="text-red-600 hover:text-red-900">
+                                <i class="fas fa-trash"></i> Hapus
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            editBook(id) {
+                const book = this.books.find(b => b.id === id);
+                if (book) {
+                    this.currentEditId = id;
+                    document.getElementById('modalTitle').textContent = 'Edit Buku';
+                    document.getElementById('bookId').value = id;
+                    document.getElementById('title').value = book.title;
+                    document.getElementById('author').value = book.author;
+                    document.getElementById('genre').value = book.genre;
+                    document.getElementById('year').value = book.year;
+                    document.getElementById('description').value = book.description || '';
+                    this.openModal();
+                }
+            }
+
+            openAddModal() {
+                this.currentEditId = null;
+                document.getElementById('modalTitle').textContent = 'Tambah Buku';
+                document.getElementById('bookForm').reset();
+                this.openModal();
+            }
+
+            openModal() {
+                document.getElementById('bookModal').classList.add('show');
+            }
+
+            closeModal() {
+                document.getElementById('bookModal').classList.remove('show');
+                document.getElementById('bookForm').reset();
+                this.currentEditId = null;
+            }
+        }
+
+        // Navigation function
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.add('hidden');
+            });
+            
+            // Show selected page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+            }
+        }
+
+        // Global functions for modal
+        function openAddModal() {
+            library.openAddModal();
+        }
+
+        function closeModal() {
+            library.closeModal();
+        }
+
+        // Initialize the library system
+        const library = new LibraryManager();
+
+        // Show home page by default
+        showPage('home');
+    </script>
+</body>
+</html>

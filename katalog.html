@@ -1,0 +1,185 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Katalog - Library</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body class="m-0 p-0 overflow-auto">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 flex justify-center items-center px-6 py-4 border-b border-black bg-white">
+        <nav>
+            <ul class="flex space-x-10 font-semibold text-black text-sm">
+                <li><a class="hover:underline" href="index.html">HOME</a></li>
+                <li><a class="hover:underline" href="katalog.html">KATALOG</a></li>
+                <li><a class="hover:underline" href="tentang.html">TENTANG</a></li>
+                <li><a class="hover:underline" href="kontak.html">KONTAK</a></li>
+                <li><a class="hover:underline" href="/Profil/profile_page.html">PROFILE</a></li>
+                <li><a class="hover:underline" href="/login/register_page.html">DAFTAR</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative w-full h-64 overflow-hidden">
+        <img alt="Library books background" class="absolute inset-0 w-full h-full object-cover" 
+             src="https://storage.googleapis.com/a1aa/image/313c5a2a-0d2f-47d4-b983-e35af1984e79.jpg" />
+        <div class="absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-center items-center text-white">
+            <h1 class="text-4xl font-extrabold fade-in" data-animation-delay="0.2">KATALOG BUKU</h1>
+            <p class="text-lg mt-2 fade-in" data-animation-delay="0.4">Temukan koleksi buku terbaik kami</p>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="py-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div class="flex-1 max-w-md">
+                    <div class="relative">
+                        <input type="text" placeholder="Cari buku..." 
+                               class="w-full px-4 py-2 pl-10 form-input rounded-lg">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <select class="px-4 py-2 form-input rounded-lg">
+                        <option>Semua Kategori</option>
+                        <option>Fiksi</option>
+                        <option>Non-Fiksi</option>
+                        <option>Sains</option>
+                        <option>Sejarah</option>
+                    </select>
+                    <select class="px-4 py-2 form-input rounded-lg">
+                        <option>Urutkan</option>
+                        <option>Terbaru</option>
+                        <option>Terlama</option>
+                        <option>A-Z</option>
+                        <option>Z-A</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Books Grid -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-10">
+                <!-- Book 1 -->
+                <a href="book_detail.html" class="flex flex-col items-center card-hover transition duration-300">
+                    <img src="https://storage.googleapis.com/a1aa/image/2857dde8-6c5f-4384-5e10-2508600efa43.jpg"
+                        alt="Book cover"
+                        class="w-[150px] h-[220px] object-cover rounded shadow" />
+                    <p class="mt-4 font-bold text-sm uppercase text-black text-center">The Great Gatsby</p>
+                    <p class="text-xs text-gray-600 text-center">F. Scott Fitzgerald</p>
+                </a>
+
+                <!-- Book 2 -->
+                <a href="book_detail.html" class="flex flex-col items-center card-hover transition duration-300">
+                    <img src="https://storage.googleapis.com/a1aa/image/2857dde8-6c5f-4384-5e10-2508600efa43.jpg"
+                        alt="Book cover"
+                        class="w-[150px] h-[220px] object-cover rounded shadow" />
+                    <p class="mt-4 font-bold text-sm uppercase text-black text-center">To Kill a Mockingbird</p>
+                    <p class="text-xs text-gray-600 text-center">Harper Lee</p>
+                </a>
+
+                <!-- Book 3 -->
+                <a href="book_detail.html" class="flex flex-col items-center card-hover transition duration-300">
+                    <img src="https://storage.googleapis.com/a1aa/image/2857dde8-6c5f-4384-5e10-2508600efa43.jpg"
+                        alt="Book cover"
+                        class="w-[150px] h-[220px] object-cover rounded shadow" />
+                    <p class="mt-4 font-bold text-sm uppercase text-black text-center">1984</p>
+                    <p class="text-xs text-gray-600 text-center">George Orwell</p>
+                </a>
+
+                <!-- Book 4 -->
+                <a href="book_detail.html" class="flex flex-col items-center card-hover transition duration-300">
+                    <img src="https://storage.googleapis.com/a1aa/image/2857dde8-6c5f-4384-5e10-2508600efa43.jpg"
+                        alt="Book cover"
+                        class="w-[150px] h-[220px] object-cover rounded shadow" />
+                    <p class="mt-4 font-bold text-sm uppercase text-black text-center">Pride and Prejudice</p>
+                    <p class="text-xs text-gray-600 text-center">Jane Austen</p>
+                </a>
+
+                <!-- Book 5 -->
+                <a href="book_detail.html" class="flex flex-col items-center card-hover transition duration-300">
+                    <img src="https://storage.googleapis.com/a1aa/image/2857dde8-6c5f-4384-5e10-2508600efa43.jpg"
+                        alt="Book cover"
+                        class="w-[150px] h-[220px] object-cover rounded shadow" />
+                    <p class="mt-4 font-bold text-sm uppercase text-black text-center">The Catcher in the Rye</p>
+                    <p class="text-xs text-gray-600 text-center">J.D. Salinger</p>
+                </a>
+
+                <!-- Book 6 -->
+                <a href="book_detail.html" class="flex flex-col items-center card-hover transition duration-300">
+                    <img src="https://storage.googleapis.com/a1aa/image/2857dde8-6c5f-4384-5e10-2508600efa43.jpg"
+                        alt="Book cover"
+                        class="w-[150px] h-[220px] object-cover rounded shadow" />
+                    <p class="mt-4 font-bold text-sm uppercase text-black text-center">Lord of the Flies</p>
+                    <p class="text-xs text-gray-600 text-center">William Golding</p>
+                </a>
+
+                <!-- Book 7 -->
+                <a href="book_detail.html" class="flex flex-col items-center card-hover transition duration-300">
+                    <img src="https://storage.googleapis.com/a1aa/image/2857dde8-6c5f-4384-5e10-2508600efa43.jpg"
+                        alt="Book cover"
+                        class="w-[150px] h-[220px] object-cover rounded shadow" />
+                    <p class="mt-4 font-bold text-sm uppercase text-black text-center">The Hobbit</p>
+                    <p class="text-xs text-gray-600 text-center">J.R.R. Tolkien</p>
+                </a>
+
+                <!-- Book 8 -->
+                <a href="book_detail.html" class="flex flex-col items-center card-hover transition duration-300">
+                    <img src="https://storage.googleapis.com/a1aa/image/2857dde8-6c5f-4384-5e10-2508600efa43.jpg"
+                        alt="Book cover"
+                        class="w-[150px] h-[220px] object-cover rounded shadow" />
+                    <p class="mt-4 font-bold text-sm uppercase text-black text-center">Brave New World</p>
+                    <p class="text-xs text-gray-600 text-center">Aldous Huxley</p>
+                </a>
+
+                <!-- Book 9 -->
+                <a href="book_detail.html" class="flex flex-col items-center card-hover transition duration-300">
+                    <img src="https://storage.googleapis.com/a1aa/image/2857dde8-6c5f-4384-5e10-2508600efa43.jpg"
+                        alt="Book cover"
+                        class="w-[150px] h-[220px] object-cover rounded shadow" />
+                    <p class="mt-4 font-bold text-sm uppercase text-black text-center">Jane Eyre</p>
+                    <p class="text-xs text-gray-600 text-center">Charlotte Brontë</p>
+                </a>
+
+                <!-- Book 10 -->
+                <a href="book_detail.html" class="flex flex-col items-center card-hover transition duration-300">
+                    <img src="https://storage.googleapis.com/a1aa/image/2857dde8-6c5f-4384-5e10-2508600efa43.jpg"
+                        alt="Book cover"
+                        class="w-[150px] h-[220px] object-cover rounded shadow" />
+                    <p class="mt-4 font-bold text-sm uppercase text-black text-center">Wuthering Heights</p>
+                    <p class="text-xs text-gray-600 text-center">Emily Brontë</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pagination -->
+    <section class="py-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-center items-center space-x-2">
+                <button class="px-3 py-2 bg-white border border-gray-300 rounded hover:bg-gray-50 transition">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="px-4 py-2 bg-blue-600 text-white rounded font-semibold">1</button>
+                <button class="px-4 py-2 bg-white border border-gray-300 rounded hover:bg-gray-50 transition">2</button>
+                <button class="px-4 py-2 bg-white border border-gray-300 rounded hover:bg-gray-50 transition">3</button>
+                <button class="px-3 py-2 bg-white border border-gray-300 rounded hover:bg-gray-50 transition">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Library System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .animation-delay-1000 {
+            animation-delay: 1s;
+        }
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-50 via-white to-blue-100">
+    <!-- Background Animation -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="absolute top-10 -right-32 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+        <div class="absolute top-96 -left-32 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-2000"></div>
+        <div class="absolute top-[600px] -right-40 w-60 h-60 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-pulse animation-delay-1000"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="relative z-10 bg-white/80 backdrop-blur-sm shadow-lg border-b border-white/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="h-10 w-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-book text-white text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="ml-4">
+                        <h1 class="text-xl font-bold text-gray-900">Library System</h1>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/index.html" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                    <a href="mybooks/my_book.html" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <i class="fas fa-book-open mr-2"></i>My Books
+                    </a>
+                    <button onclick="logout()" class="text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="relative z-10 py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Profile Header -->
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20 mb-8">
+                <div class="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
+                    <!-- Profile Picture -->
+                    <div class="relative">
+                        <div class="h-32 w-32 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
+                            <i class="fas fa-user text-white text-4xl"></i>
+                        </div>
+                        <button class="absolute bottom-0 right-0 bg-white rounded-full p-2 shadow-lg hover:shadow-xl transition-shadow">
+                            <i class="fas fa-camera text-gray-600"></i>
+                        </button>
+                    </div>
+
+                    <!-- Profile Info -->
+                    <div class="flex-1 text-center md:text-left">
+                        <h1 class="text-3xl font-bold text-gray-900 mb-2">Wirasakti</h1>
+                        <div class="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-6 text-gray-600">
+                            <div class="flex items-center justify-center md:justify-start">
+                                <i class="fas fa-envelope mr-2 text-purple-600"></i>
+                                <span>example@gmail.com</span>
+                            </div>
+                            <div class="flex items-center justify-center md:justify-start">
+                                <i class="fas fa-phone mr-2 text-purple-600"></i>
+                                <span>+62 812-3456-7890</span>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                <i class="fas fa-check-circle mr-2"></i>
+                                Active Member
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Edit Button -->
+                    <div class="flex flex-col space-y-2">
+                        <button onclick="editProfile()" class="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:from-purple-700 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 shadow-lg">
+                            <i class="fas fa-edit mr-2"></i>Edit Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Books Borrowed -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-white/20 text-center">
+                    <div class="h-16 w-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-book text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">5</h3>
+                    <p class="text-gray-600">Books Borrowed</p>
+                </div>
+
+                <!-- Books Returned -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-white/20 text-center">
+                    <div class="h-16 w-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">12</h3>
+                    <p class="text-gray-600">Books Returned</p>
+                </div>
+
+                <!-- Member Since -->
+                <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-white/20 text-center">
+                    <div class="h-16 w-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-calendar text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Jan 2024</h3>
+                    <p class="text-gray-600">Member Since</p>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Quick Actions</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- My Books -->
+                    <a href="my_book.html" class="group bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105">
+                        <div class="flex items-center space-x-4">
+                            <div class="h-12 w-12 bg-white/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-books text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">My Books</h3>
+                                <p class="text-white/80 text-sm">View borrowed books</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center text-white/80">
+                            <span class="text-sm">Go to My Books</span>
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </a>
+
+                    <!-- Browse Books -->
+                    <a href="books.html" class="group bg-gradient-to-r from-green-500 to-emerald-600 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105">
+                        <div class="flex items-center space-x-4">
+                            <div class="h-12 w-12 bg-white/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-search text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">Browse Books</h3>
+                                <p class="text-white/80 text-sm">Find new books</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center text-white/80">
+                            <span class="text-sm">Browse Library</span>
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </a>
+
+                    <!-- Reading History -->
+                    <a href="history.html" class="group bg-gradient-to-r from-orange-500 to-red-600 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105">
+                        <div class="flex items-center space-x-4">
+                            <div class="h-12 w-12 bg-white/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-history text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">Reading History</h3>
+                                <p class="text-white/80 text-sm">View past books</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center text-white/80">
+                            <span class="text-sm">View History</span>
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function editProfile() {
+            alert('Edit profile functionality will be implemented soon!');
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                alert('Logging out...');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Add some interactive effects
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05) translateY(-2px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1) translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
